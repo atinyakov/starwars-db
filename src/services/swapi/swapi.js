@@ -42,15 +42,15 @@ class SwapiService {
         return this._transformStarship(starship);
     }
 
-    async getPictureURL(id){
-        const res = await fetch(`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`);
+    // async getPictureURL(id){
+    //     const res = await fetch(`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`);
         
-        if(!res.ok) {
-            return 'https://starwars-visualguide.com/assets/img/big-placeholder.jpg'
-        }
+    //     if(!res.ok) {
+    //         return 'https://starwars-visualguide.com/assets/img/placeholder.jpg'
+    //     }
     
-        return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
-    }
+    //     return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
+    // }
 
 
     _extractId(item) {

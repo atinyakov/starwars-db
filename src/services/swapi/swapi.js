@@ -13,8 +13,9 @@ class SwapiService {
     }
 
     async getAllPeople() {
-        const res = this.getResource(`/people/`);
-        return res.results.map(this._transformPerson);
+        const res = await this.getResource(`/people/`);
+
+        return res.results.map(this._transformPerson.bind(this));
     }
 
     async getPerson(id) {
@@ -83,7 +84,7 @@ class SwapiService {
         }
     }
 
-    _transformPerson(person) {
+    _transformPerson (person) {
         return {
             id: this._extractId(person),
             name: person.name,

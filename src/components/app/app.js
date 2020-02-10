@@ -10,11 +10,11 @@ import './app.css'
 export default class App extends Component {
 
     state = {
-        selected: null
+        selectedPerson: 5
     }
 
     userSelected = (id) => {
-        this.setState({selected: id});
+        this.setState({selectedPerson: id});
     }
 
     render(){
@@ -25,10 +25,10 @@ export default class App extends Component {
         
                 <div className="row mb2">
                 <div className="col-md-6">
-                    <ItemList itemSelected = {this.userSelected}/>
+                    <ItemList userSelected = {this.userSelected}/>
                 </div>
                 <div className="col-md-6">
-                    <PersonDetails />
+                    <PersonDetails personId = {this.state.selectedPerson}/>
                 </div>
                 </div>
             </div>

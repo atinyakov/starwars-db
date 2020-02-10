@@ -13,9 +13,10 @@ export default class ItemList extends Component {
     }
 
     componentDidMount() {
-        this.swapiService.getAllPeople().then((peopleList) => {
-            this.setState({people: peopleList});
-        });
+        this.swapiService.getAllPeople()
+            .then((peopleList) => {
+                this.setState({people: peopleList});
+            });
     }
     
     renderItems = (arr) => {
@@ -23,7 +24,7 @@ export default class ItemList extends Component {
             return (
                 <li key       = {user.id}
                     className = "list-group-item"
-                    onClick   = {() => this.props.itemSelected(user.id)} >
+                    onClick   = {() => this.props.userSelected(user.id)} >
                     {user.name}
                 </li>
             )

@@ -1,49 +1,46 @@
-import React, { Component } from "react";
-import SwapiService from '../../services/swapi'
-import Spinner from '../../services/spinner'
+import React, { Component } from 'react';
+import Spinner from '../../services/spinner';
 
-import './item-list.css'
+import './item-list.css';
 
 export default class ItemList extends Component {
-
-    swapiService = new SwapiService();
-
     state = {
-        people : null
-    }
+        data: null
+    };
 
     componentDidMount() {
-        this.swapiService.getAllPeople()
-            .then((peopleList) => {
-                this.setState({people: peopleList});
-            });
+        const { getData } = this.props;
+
+        getData().then(res => {
+            this.setState({ data: res });
+        });
     }
-    
-    renderItems = (arr) => {
-        return arr.map(user => {
+
+    renderItems = arr => {
+        return arr.map(item => {
+            const { renderItem } = this.props;
+            const name = renderItem(item);
             return (
-                <li key       = {user.id}
-                    className = "list-group-item"
-                    onClick   = {() => this.props.userSelected(user.id)} >
-                    {user.name}
+                <li
+                    key={item.id}
+                    className="list-group-item"
+                    onClick={() => this.props.itemSelected(item.id)}
+                >
+                    {name}
                 </li>
-            )
-        })
-    }
+            );
+        });
+    };
 
     render() {
-        const {people} = this.state;
+        const { data } = this.state;
 
-        if(!people) {
-            return <Spinner />
+        if (!data) {
+            return <Spinner />;
         }
 
-        const users = this.renderItems(people);
-        
-        return (
-            <ul className="item-list list-group">
-                {users}
-            </ul>
-        )
+        const dataToDisplay = this.renderItems(data);
+
+        return <ul className="item-list list-group">{dataToDisplay}</ul>;
     }
 }

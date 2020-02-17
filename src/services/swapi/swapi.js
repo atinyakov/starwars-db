@@ -18,7 +18,6 @@ class SwapiService {
     };
 
     getPerson = async id => {
-        console.log('getPerson');
         const person = await this.getResource(`/people/${id}`);
         return this._transformPerson(person);
     };
@@ -39,7 +38,7 @@ class SwapiService {
     };
 
     getStarships = async id => {
-        const starship = this.getResource(`/starships/${id}`);
+        const starship = await this.getResource(`/starships/${id}`);
         return this._transformStarship(starship);
     };
 
@@ -55,8 +54,15 @@ class SwapiService {
         return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
     }
 
+    getPersonUrl = id => {
+        return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
+    };
+
+    getStarshipUrl = id => {
+        return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+    };
+
     _extractId = item => {
-        console.log('item', item);
         const idRegexp = /\/([0-9]*)\/$/;
         return item.url.match(idRegexp)[1];
     };
@@ -81,7 +87,7 @@ class SwapiService {
             lenght: starship.lenght,
             crew: starship.crew,
             passengers: starship.passengers,
-            cargoCapacity: starship.cargoCapacity
+            cargoCapacity: starship.cargo_capacity
         };
     };
 

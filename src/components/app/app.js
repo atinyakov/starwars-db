@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import ItemList from '../item-list';
+import { withData } from '../hoc-helpers/withData';
 import RandomPlanet from '../random-planet';
 import { ItemDetails, ItemRow } from '../item-details';
 import SwapiService from '../../services/swapi';
@@ -28,20 +29,11 @@ export default class App extends Component {
     };
 
     render() {
-        const personList = (
-            <ItemList
-                getData={this.swapiService.getAllPeople}
-                itemSelected={this.itemSelected}
-                renderItem={({ name, gender }) => `${name} / ${gender}`}
-            />
-        );
+        const PersonList = withData(ItemList, this.swapiService.getAllPeople);
 
-        const starshipList = (
-            <ItemList
-                getData={this.swapiService.getAllStarships}
-                itemSelected={this.itemSelected}
-                renderItem={({ name, gender }) => `${name} / ${gender}`}
-            />
+        const StarshipList = withData(
+            ItemList,
+            this.swapiService.getAllStarships
         );
 
         const personDetails = (
@@ -60,7 +52,9 @@ export default class App extends Component {
                 getData={this.swapiService.getStarships}
                 getImg={this.swapiService.getStarshipUrl}
             >
+                <ItemRow field={'model'} label={'Model'} />
                 <ItemRow field={'cargoCapacity'} label={'Cargo'} />
+                <ItemRow field={'length'} label={'Length'} />
             </ItemDetails>
         );
 
@@ -69,7 +63,24 @@ export default class App extends Component {
                 <Header />
                 <RandomPlanet />
                 <ErrorBoundary>
-                    <Row left={personDetails} right={starshipDetails} />
+                    <Row
+                        left={
+                            <PersonList
+                                itemSelected={this.itemSelected}
+                                renderItem={({ name, gender }) =>
+                                    `${name} / ${gender}`
+                                }
+                            />
+                        }
+                        right={
+                            <StarshipList
+                                itemSelected={this.itemSelected}
+                                renderItem={({ name, crew }) =>
+                                    `${name} / ${crew}`
+                                }
+                            />
+                        }
+                    />
                 </ErrorBoundary>
             </div>
         );

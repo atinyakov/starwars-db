@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export const withData = (WrappedComponent, getData) => {
+const withData = (WrappedComponent, getData) => {
     return class extends Component {
         state = {
             data: null
@@ -17,3 +17,5 @@ export const withData = (WrappedComponent, getData) => {
         }
     };
 };
+
+export default withData;

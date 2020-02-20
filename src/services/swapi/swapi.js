@@ -42,7 +42,7 @@ class SwapiService {
         return this._transformStarship(starship);
     };
 
-    async getPictureURL(id) {
+    getPictureURL = async id => {
         const res = await fetch(
             `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
         );
@@ -52,14 +52,14 @@ class SwapiService {
         }
 
         return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
-    }
-
-    getPersonUrl = id => {
-        return `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
     };
 
-    getStarshipUrl = id => {
-        return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+    getPersonUrl = async id => {
+        return await `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
+    };
+
+    getStarshipUrl = async id => {
+        return await `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
     };
 
     _extractId = item => {
@@ -92,7 +92,6 @@ class SwapiService {
     };
 
     _transformPerson = person => {
-        console.log('person', person);
         return {
             id: this._extractId(person),
             // id: person.url,

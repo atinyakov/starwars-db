@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 
 import Header from '../header';
-import ItemList from '../item-list';
-import { withData } from '../hoc-helpers/withData';
+import { Person, Planet, Starship } from '../sw-components';
 import RandomPlanet from '../random-planet';
-import { ItemDetails, ItemRow } from '../item-details';
 import SwapiService from '../../services/swapi';
 import ErrorBoundary from '../ErrrorBoundary';
 import './app.css';
@@ -25,39 +23,10 @@ export default class App extends Component {
     swapiService = new SwapiService();
 
     itemSelected = id => {
-        this.setState({ itemSelected: id });
+        this.setState({ selectedItem: id });
     };
 
     render() {
-        const PersonList = withData(ItemList, this.swapiService.getAllPeople);
-
-        const StarshipList = withData(
-            ItemList,
-            this.swapiService.getAllStarships
-        );
-
-        const personDetails = (
-            <ItemDetails
-                itemId={this.state.selectedItem}
-                getData={this.swapiService.getPerson}
-                getImg={this.swapiService.getPersonUrl}
-            >
-                <ItemRow field={'eyeColor'} label={'Eye Color'} />
-                <ItemRow field={'gender'} label={'Gender'} />
-            </ItemDetails>
-        );
-        const starshipDetails = (
-            <ItemDetails
-                itemId={this.state.selectedItem}
-                getData={this.swapiService.getStarships}
-                getImg={this.swapiService.getStarshipUrl}
-            >
-                <ItemRow field={'model'} label={'Model'} />
-                <ItemRow field={'cargoCapacity'} label={'Cargo'} />
-                <ItemRow field={'length'} label={'Length'} />
-            </ItemDetails>
-        );
-
         return (
             <div>
                 <Header />
@@ -65,7 +34,7 @@ export default class App extends Component {
                 <ErrorBoundary>
                     <Row
                         left={
-                            <PersonList
+                            <Starship.List
                                 itemSelected={this.itemSelected}
                                 renderItem={({ name, gender }) =>
                                     `${name} / ${gender}`
@@ -73,11 +42,8 @@ export default class App extends Component {
                             />
                         }
                         right={
-                            <StarshipList
-                                itemSelected={this.itemSelected}
-                                renderItem={({ name, crew }) =>
-                                    `${name} / ${crew}`
-                                }
+                            <Starship.Details
+                                itemId={this.state.selectedItem}
                             />
                         }
                     />

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi';
 import Spinner from '../../services/spinner';
 import './item-details.css';
 
@@ -13,7 +12,6 @@ export const ItemRow = ({ item, field, label }) => {
 };
 
 export class ItemDetails extends Component {
-    swapiService = new SwapiService();
     state = {
         item: null,
         isLoading: false,
@@ -32,7 +30,6 @@ export class ItemDetails extends Component {
 
     updateItem() {
         const { itemId, getData, getImg } = this.props;
-
         if (!itemId) {
             return;
         }
@@ -40,7 +37,13 @@ export class ItemDetails extends Component {
         this.setState({ isLoading: true });
 
         getData(itemId).then(item =>
-            this.setState({ item, isLoading: false, url: getImg(itemId) })
+            this.setState({
+                item,
+                isLoading: false,
+                url: getImg(itemId).then(res => {
+                    this.setState({ url: res });
+                })
+            })
         );
     }
 
@@ -49,7 +52,7 @@ export class ItemDetails extends Component {
             return null;
         }
 
-        const { name, id, gender, birthYear, eyeColor } = this.state.item;
+        const { name } = this.state.item;
         const { item } = this.state;
         const { isLoading, url } = this.state;
 

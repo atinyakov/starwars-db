@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import { Person, Planet, Starship } from '../sw-components';
+import { SwapiProvider } from '../SwapiProvider';
 import RandomPlanet from '../random-planet';
 import SwapiService from '../../services/swapi';
 import ErrorBoundary from '../ErrrorBoundary';
@@ -29,25 +30,27 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                <Header />
-                <RandomPlanet />
-                <ErrorBoundary>
-                    <Row
-                        left={
-                            <Starship.List
-                                itemSelected={this.itemSelected}
-                                renderItem={({ name, gender }) =>
-                                    `${name} / ${gender}`
-                                }
-                            />
-                        }
-                        right={
-                            <Starship.Details
-                                itemId={this.state.selectedItem}
-                            />
-                        }
-                    />
-                </ErrorBoundary>
+                <SwapiProvider value={this.swapiService}>
+                    <Header />
+                    <RandomPlanet />
+                    <ErrorBoundary>
+                        <Row
+                            left={
+                                <Person.List
+                                    itemSelected={this.itemSelected}
+                                    renderItem={({ name, gender }) =>
+                                        `${name} / ${gender}`
+                                    }
+                                />
+                            }
+                            right={
+                                <Person.Details
+                                    itemId={this.state.selectedItem}
+                                />
+                            }
+                        />
+                    </ErrorBoundary>
+                </SwapiProvider>
             </div>
         );
     }

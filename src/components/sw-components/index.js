@@ -1,5 +1,8 @@
 import { PersonList, PlanetList, StarshipList } from './item-lists';
-import { PersonDetails, PlanetDetails, StarshipDetails } from './item-details';
+
+import PersonDetails from './PersonDetails';
+import PlanetDetails from './PlanetDetails';
+import StarshipDetails from './StarshipDetails';
 
 export const Person = {
     List: PersonList,

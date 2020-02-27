@@ -1,6 +1,6 @@
 import React from 'react';
 import { ItemDetails, ItemRow } from '../item-details';
-import { SwapiConsumer } from '../SwapiProvider';
+import { SwapiConsumer } from '../SwapiContext';
 
 export const PersonDetails = ({ itemId }) => {
     return (

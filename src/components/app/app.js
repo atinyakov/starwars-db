@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import { Person, Planet, Starship } from '../sw-components';
-import { SwapiProvider } from '../SwapiProvider';
+import { SwapiProvider } from '../SwapiContext';
 import RandomPlanet from '../random-planet';
 import SwapiService from '../../services/swapi';
 import ErrorBoundary from '../ErrrorBoundary';
